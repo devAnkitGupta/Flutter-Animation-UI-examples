@@ -64,11 +64,11 @@ class _BoxState extends State<Box> with SingleTickerProviderStateMixin {
             ),
           ),
           SizedBox(height: 50),
-          RaisedButton(
+          ElevatedButton(
             child: Text("go"),
             onPressed: () => _controller.forward(),
           ),
-          RaisedButton(
+          ElevatedButton(
             child: Text("stop"),
             onPressed: () => _controller.reset(),
           ),

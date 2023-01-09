@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:searchfield/searchfield.dart';
 
 class AwesomeDropdownExample extends StatefulWidget {
-  const AwesomeDropdownExample({ Key? key }) : super(key: key);
+  const AwesomeDropdownExample({Key? key}) : super(key: key);
 
   @override
   _AwesomeDropdownExampleState createState() => _AwesomeDropdownExampleState();
@@ -10,6 +10,23 @@ class AwesomeDropdownExample extends StatefulWidget {
 
 class _AwesomeDropdownExampleState extends State<AwesomeDropdownExample> {
   String? _selectedItem;
+  List<String> countries = [
+    'Afghanistan',
+    'Turkey',
+    'Germany',
+    'France',
+    'Italy',
+    'Spain',
+    'United Kingdom',
+    'United States',
+    'Canada',
+    'Australia',
+    'New Zealand',
+    'India',
+    'Indonesia',
+    'Bangladesh',
+    'Sri Lanka',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +34,12 @@ class _AwesomeDropdownExampleState extends State<AwesomeDropdownExample> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        title: const Text('@theflutterlover', style: TextStyle(
-          color: Colors.black,
-        ),),
+        title: const Text(
+          '@theflutterlover',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
       ),
       body: Container(
         child: Column(
@@ -34,10 +54,10 @@ class _AwesomeDropdownExampleState extends State<AwesomeDropdownExample> {
                 children: [
                   Padding(
                     padding: EdgeInsets.all(20.0),
-                    child: Text('Select a country', style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.blueGrey
-                    ),),
+                    child: Text(
+                      'Select a country',
+                      style: TextStyle(fontSize: 16, color: Colors.blueGrey),
+                    ),
                   ),
                   Container(
                     width: double.infinity,
@@ -77,30 +97,27 @@ class _AwesomeDropdownExampleState extends State<AwesomeDropdownExample> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      onTap: (value) {
+                      onSuggestionTap: (value) {
                         setState(() {
-                          _selectedItem = value!;
+                          _selectedItem = value.item! as String;
                         });
 
                         print(value);
                       },
-                      suggestions: [
-                        'Afghanistan',
-                        'Turkey',
-                        'Germany',
-                        'France',
-                        'Italy',
-                        'Spain',
-                        'United Kingdom',
-                        'United States',
-                        'Canada',
-                        'Australia',
-                        'New Zealand',
-                        'India',
-                        'Indonesia',
-                        'Bangladesh',
-                        'Sri Lanka',
-                      ],
+                      suggestions: countries
+                          .map(
+                            (e) => SearchFieldListItem<String>(
+                              e,
+                              item: e,
+                              // Use child to show Custom Widgets in the suggestions
+                              // defaults to Text widget
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(e),
+                              ),
+                            ),
+                          )
+                          .toList(),
                     ),
                   ),
                 ],
@@ -115,14 +132,17 @@ class _AwesomeDropdownExampleState extends State<AwesomeDropdownExample> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _selectedItem == null ? Text('Please select a Country to Continue', style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.blueGrey
-                  ),) : Text(_selectedItem!, style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey.shade800,
-                    fontWeight: FontWeight.w600
-                  )),
+                  _selectedItem == null
+                      ? Text(
+                          'Please select a Country to Continue',
+                          style:
+                              TextStyle(fontSize: 16, color: Colors.blueGrey),
+                        )
+                      : Text(_selectedItem!,
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey.shade800,
+                              fontWeight: FontWeight.w600)),
                   MaterialButton(
                     onPressed: () {},
                     color: Colors.black,
@@ -132,7 +152,11 @@ class _AwesomeDropdownExampleState extends State<AwesomeDropdownExample> {
                       borderRadius: BorderRadius.circular(50),
                     ),
                     padding: EdgeInsets.all(0),
-                    child: Icon(Icons.arrow_forward_ios, color: Colors.blueGrey, size: 24,),
+                    child: Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.blueGrey,
+                      size: 24,
+                    ),
                   )
                 ],
               ),
